@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    @apply bg-gray-300;
+    @apply font-mono;
+}
+
+.container{
+    @apply  w-[400pt] mx-auto;
+}
+
+.input{
+    @apply rounded-lg bg-[#FFFFEC] p-2 mb-4;
+}
+
+.textarea{
+    @apply rounded-lg bg-[#FFFFEC] p-2;
+}
