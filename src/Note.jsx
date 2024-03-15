@@ -118,9 +118,9 @@ export default function Note() {
 
   return (
     <>
-      <div className='mx'>
+      <div className='mx bg-gray-800 h-[500px] w-[800px] m-auto mt-[50px] rounded-[20px]'>
         <div className="App w-[100%] flex flex-col items-center">
-          <h1 className='text-center text-4xl p-5'> Notes </h1>
+          <h1 className='text-center text-4xl p-5 text-white'> Notes </h1>
           {currentNoteId ?
             <FormEdit onEdit={handleUpdate} targetValue={notes !== null ? notes.filter(e => e.id === currentNoteId)[0] : null} notes={notes} onCancel={cancelEdit} /> : <FormTambah onAdd={handleAddData} onCancel={cancelEdit} />}
           {/* <div className="card-container border-t-2 border-[#5F6F52] my-10 flex flex-wrap"></div> */}
