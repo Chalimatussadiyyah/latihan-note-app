@@ -3,20 +3,22 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import Layout from "./Layout"
 import Note from "./Note"
 import Login from "./Pages/Login"
+// import Registrasi from "./Pages/Register"
 import { getToken } from "./api"
 import { useAuth } from './context/Auth'
+import Registrasi from "./Pages/Register"
 // import { setTokens } from "./token"
 
 function App() {
     // panggil nilai isLoggedin dari context
     const { isLoggedin } = useAuth()
 
-    const [token,setToken] = useState(null);
+    const [token, setToken] = useState(null);
 
     const handleLogin = (tokens) => {
         setToken(tokens)
     }
-    
+
     const handleLogout = () => {
         setToken(null)
         localStorage.removeItem('token');
@@ -25,15 +27,28 @@ function App() {
     useEffect(() => {
         const tokens = getToken()
         setToken(tokens);
-    },[])
+    }, [])
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Layout token={token} onLogout={handleLogout}/>}>
-                    <Route path={"/Note"} element={<Note />} /> 
-                    <Route path={"/Login"} element={<Login onLogin={handleLogin}/>} />
+                <Route element={<Layout token={token} onLogout={handleLogout} />}>
+                    {isLoggedin ? (
+                        <Route>
+                            <Route path={"/Note"} element={<Note/>} />,
+                            <Route path="/Login" element={<Navigate to={"/Note"}/>}/>
+                        </Route>
+                    ) : (
+                        <>
+                        <Route path={"/Registrasi"} element={Registrasi}/>
+                        <Route path={"/Login"} element={<Login onLogin={handleLogin}/>} />
+                        <Route path="*" element={<Navigate to={"/Login"}/>}/>
+                        </>
+                    ) }
+
+
                 </Route>
+
                 {/* {token !== null ? 
                     <Route>
                         <Route path={"/Note"} element={<Note />} /> 
@@ -93,14 +108,14 @@ export default App
 //         <BrowserRouter>
 //         <Routes>
 //             <Route element={<Layout token={token} onLogout={handleLogout}/>}>
-//             {token !== null ? 
+//             {token !== null ?
 //                 <Route>
-//                     <Route path={"/Note"} element={<Note />} /> 
+//                     <Route path={"/Note"} element={<Note />} />
 //                     <Route path="*" element={<Navigate to={"/Note"}/>}/>
 //                 </Route>
 //             : <Route path={"/Note"} element={<h1 className="text-white grid place-items-center mt-[16rem] font-bold text-[4rem]">Not Found</h1>} />}
 //             {
-//                 token !== null ? null : 
+//                 token !== null ? null :
 //                <Route>
 //                  <Route path={"/Registrasi"} element={<Register />} />
 //                  <Route path={"/Login"} element={<Login onLogin={handleLogin}/>} />
