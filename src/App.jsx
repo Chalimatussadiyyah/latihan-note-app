@@ -1,53 +1,34 @@
-import { useEffect, useState } from "react"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import Layout from "./Layout"
 import Note from "./Note"
 import Login from "./Pages/Login"
-// import Registrasi from "./Pages/Register"
-import { getToken } from "./api"
 import { useAuth } from './context/Auth'
-import Registrasi from "./Pages/Register"
-// import { setTokens } from "./token"
+import Register from "./Pages/Register"
 
 function App() {
     // panggil nilai isLoggedin dari context
     const { isLoggedin } = useAuth()
 
-    const [token, setToken] = useState(null);
-
-    const handleLogin = (tokens) => {
-        setToken(tokens)
-    }
-
-    const handleLogout = () => {
-        setToken(null)
-        localStorage.removeItem('token');
-    }
-
-    useEffect(() => {
-        const tokens = getToken()
-        setToken(tokens);
-    }, [])
-
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Layout token={token} onLogout={handleLogout} />}>
+                <Route element={<Layout/>}>
                     {isLoggedin ? (
+                        <>
                         <Route>
-                            <Route path={"/Note"} element={<Note/>} />,
+                            <Route path={"/Note"} element={<Note/>} />
                             <Route path="/Login" element={<Navigate to={"/Note"}/>}/>
                         </Route>
+                        </>
                     ) : (
                         <>
-                        <Route path={"/Registrasi"} element={Registrasi}/>
-                        <Route path={"/Login"} element={<Login onLogin={handleLogin}/>} />
+                        <Route path={"/Registrasi"} element={<Register/>}/>
+                        <Route path={"/Login"} element={<Login/>} />
                         <Route path="*" element={<Navigate to={"/Login"}/>}/>
                         </>
                     ) }
-
-
                 </Route>
+                
 
                 {/* {token !== null ? 
                     <Route>
@@ -67,7 +48,6 @@ function App() {
             </Routes>
 
         </BrowserRouter>
-
     )
 }
 

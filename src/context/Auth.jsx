@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react"
-import { handleLogin, setTokens } from "../api"
+import { createContext, useContext, useEffect, useState } from "react"
+import { getToken, handleLogin, setTokens } from "../api"
 
 // nilai default
 const initialAuthState = {
@@ -22,10 +22,16 @@ const AuthProvider = ({children}) => {
     // state
     const [isLoggedin, setIsLoggedin] = useState(false)
 
+    useEffect(() => {
+        const token = getToken()
+        if (token != null) {
+            setIsLoggedin(true)
+        }
+    }), []
     // function
     const doLogin = async (email, password) => {
         //memanggil api dengan data email & password
-        console.log("akan melakuakan login dengan : ", email, password)
+        console.log("akan melakukan login dengan : ", email, password)
 
         //memanggil api dengan axios
         const apiResult = await handleLogin(email,password)
@@ -38,12 +44,11 @@ const AuthProvider = ({children}) => {
         setTokens(apiResult.data.data.accessToken)
 
         //jika gagal tampilkan peringatan
-        setIsLoggedin(false)
-        console.log('test kepanggil' ,isLoggedin)
     }
 
     const doLogout = () => {
         setIsLoggedin(false)
+        localStorage.removeItem('token')
     }
 
     // return provider

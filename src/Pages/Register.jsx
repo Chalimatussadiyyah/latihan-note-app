@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Register } from "../api";
 
-function Registrasi() {
+export default function Registrasi() {
 
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
@@ -37,4 +37,3 @@ function Registrasi() {
         </>
     )
 } 
-export default Registrasi
