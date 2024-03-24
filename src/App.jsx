@@ -1,9 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import Login from "./Login"
+import { useAuth } from './Auth'
+import Register from "./Register"
+import { NoteProvider } from "./NoteContext"
 import Layout from "./Layout"
 import Note from "./Note"
-import Login from "./Pages/Login"
-import { useAuth } from './context/Auth'
-import Register from "./Pages/Register"
 
 function App() {
     // panggil nilai isLoggedin dari context
@@ -16,7 +17,7 @@ function App() {
                     {isLoggedin ? (
                         <>
                         <Route>
-                            <Route path={"/Note"} element={<Note/>} />
+                            <Route path={"/Note"} element={<NoteProvider> <Note/> </NoteProvider>} />
                             <Route path="/Login" element={<Navigate to={"/Note"}/>}/>
                         </Route>
                         </>

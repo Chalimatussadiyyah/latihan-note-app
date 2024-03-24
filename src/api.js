@@ -40,6 +40,45 @@ export const tampilkan = async () => {
     return notes;
 };
 
+export const addNote = async (title, content) => {
+  const token = getToken();
+  const noteBaru = {
+    title: title,
+    content: content,
+    writer: 1,
+  };
+  const add = await axios
+    .post(http + "notes", noteBaru, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error.response;
+    });
+    return add;
+}
+
+export const deleteNote = async (id) => {
+  const token = getToken();
+  const deletes = await axios
+    .delete(http + "notes/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((eror) => {
+      return eror.response;
+    });
+  return deletes
+}
+
 export const editNote = async (id, title, content, writer) => {
     const token = getToken();
     const edits = await axios

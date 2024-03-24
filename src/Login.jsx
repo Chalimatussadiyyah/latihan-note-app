@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { handleLogin, setTokens } from "../api";
-import { useAuth } from "../context/Auth";
+import { handleLogin, setTokens } from "./api";
+import { useAuth } from "./Auth";
 
 export default function Login({ onLogin }) {
     const { doLogin } = useAuth()
@@ -35,7 +35,7 @@ export default function Login({ onLogin }) {
                             <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" className="input" placeholder="Email" />
                             <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" className="input" placeholder="Password" />
                         </div>
-                        <button onClick={handleClick} className="bg-gray-700 font-bold hover:bg-gray-500 mt-[20px] h-10 w-[150px] text-[20px] rounded-lg text-white">Login</button>
+                        <button onClick={handleClick} className="bg-gray-700 font-bold hover:bg-gray-600 mt-[20px] h-10 w-[150px] text-[20px] rounded-lg text-white">Login</button>
                     </div>
                 </div>
             </div>

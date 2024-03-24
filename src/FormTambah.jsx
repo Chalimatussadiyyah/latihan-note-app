@@ -1,14 +1,22 @@
 import { useState } from "react";
+import { useNoteContext } from "./NoteContext";
 
-function FormTambah({ onAdd }) {
+function FormTambah() {
+    const { handleAddData } = useNoteContext()
     const [title, setTitle] = useState("")
     const [note, setNotes] = useState("")
 
     const handleSubmit = () => {
-        onAdd(title, note);
+        handleAddData(title, note);
         setTitle("")
         setNotes("")
     };
+    
+    const handleCancel = () => {
+        setTitle("")
+        setNotes("")
+    }
+
     return (
         <div className="container" >
             <div className='flex flex-col'>
@@ -34,14 +42,12 @@ function FormTambah({ onAdd }) {
 
                 <button
                     onClick={() => handleSubmit()}
-                    className="bg-gray-700 font-bold hover:bg-gray-600 text-white text-lg rounded-lg px-5 py-3 mt-4">
-                    Add Note
+                    className="bg-gray-700 font-bold hover:bg-gray-600 text-white text-lg rounded-lg px-5 py-3 mt-4">Add Note
                 </button>
 
                 <button
-                    onClick={()=> onCancel()}
-                    className="bg-gray-700 font-bold hover:bg-gray-600 text-white text-lg rounded-lg px-5 py-3 mt-2">
-                    Cancel
+                    onClick={()=> handleCancel()}
+                    className="bg-gray-700 font-bold hover:bg-gray-600 text-white text-lg rounded-lg px-5 py-3 mt-2">Cancel
                 </button>
             
             </div>
